@@ -1,0 +1,21 @@
+.suggestions-block {
+  display: table;
+  width: 100%;
+
+  .inner-block {
+    display: none;
+    margin-top: -31px;
+    padding: 6px;
+    border: 1px solid black;
+  }
+
+  .suggestions-list {
+    list-style-type: none;
+
+    .suggestion {
+      &:hover, &.highlighted {
+        background-color: lightgrey;
+      }
+    }
+  }
+}

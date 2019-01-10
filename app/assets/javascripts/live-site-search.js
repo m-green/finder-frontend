@@ -5,6 +5,7 @@
 
   var liveSearch = {
     action: false,
+    suggestionsAction: '/suggestions.json',
     state: false,
     previousState: false,
     resultCache: {},
@@ -19,12 +20,19 @@
         liveSearch.$ariaLiveResultCount = $('.js-aria-live-count');
         if(liveSearch.$form){
           liveSearch.$resultsBlock = $('.js-live-search-results-block');
+          liveSearch.$suggestionsBlock = $('.js-live-search-suggestions-block');
 
           liveSearch.action = liveSearch.$form.attr('action') + '.json';
 
           liveSearch.saveState();
 
           liveSearch.$form.on('change', 'input[type=checkbox]', liveSearch.checkboxChange);
+
+          liveSearch.$form.find('input[type=search]').on('keyup', function(e) {
+              liveSearch.updateSuggestions();
+            }
+          );
+
           $(window).on('popstate', liveSearch.popState);
         }
       } else {
@@ -112,6 +120,25 @@
         var out = new $.Deferred()
         return out.resolve();
       }
+    },
+
+    updateSuggestions: function(){
+      liveSearch.saveState();
+
+      return $.ajax({
+        url: liveSearch.suggestionsAction,
+        data: liveSearch.state,
+      }).done(function(response){
+        liveSearch.displaySuggestions(response);
+      });
+    },
+    displaySuggestions: function(data){
+      liveSearch.$suggestionsBlock
+        .mustache('search/_suggestions_list', data);
+
+      liveSearch.$suggestionsBlock
+        .find('.inner-block')
+        .toggle(!!data.results.length);
     },
     showLoadingIndicator: function(){
       liveSearch.$resultCount = $('#js-live-search-result-count');
