@@ -29,6 +29,7 @@ private
 
   def development_env_finder_json
     return news_and_communications_json if is_news_and_communications?
+    return find_eu_guidance_json if find_eu_guidance_finder?
     return services_json if is_services?
 
     ENV["DEVELOPMENT_FINDER_JSON"]
@@ -37,6 +38,10 @@ private
   def news_and_communications_json
     # Hard coding this in during development
     "features/fixtures/news_and_communications.json"
+  end
+
+  def find_eu_guidance_json
+    "features/fixtures/find-eu-exit-guidance-business.json"
   end
 
   def services_json
@@ -146,6 +151,10 @@ private
 
   def is_news_and_communications?
     base_path == "/news-and-communications"
+  end
+
+  def find_eu_guidance_finder?
+    base_path.starts_with?("find-eu-exit-guidance-business")
   end
 
   def is_services?
