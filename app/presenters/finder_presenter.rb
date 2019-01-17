@@ -27,7 +27,7 @@ class FinderPresenter
   end
 
   def show_generic_description?
-    content_item['details']['generic_description']
+    content_item['details']['generic_description'].blank?
   end
 
   def default_order
