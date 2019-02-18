@@ -104,7 +104,7 @@ class ResultSetPresenter
 
     groups = [compact_and_sort(primary_group), compact_and_sort(secondary_group)].flatten
     groups << default_group unless default_group[:documents].empty?
-    groups
+    update_grouped_results_document_indices(groups)
   end
 
   def documents
@@ -217,5 +217,25 @@ private
 
   def facet_filters
     @filter_params.symbolize_keys.without(:order, :keywords)
+  end
+
+  def update_grouped_results_document_indices(groups)
+    group_index = 0
+    groups.map do |group|
+      group_index += 1
+      document_index = 0
+      {
+        facet_name: group[:facet_name],
+        facet_key: group[:facet_key],
+        documents: group[:documents].map do |d|
+          document_index_label = "#{group_index}.#{document_index += 1}"
+          document_index_label << "p" if d[:document][:promoted]
+          {
+            document_index: document_index_label,
+            document: d[:document]
+          }
+        end
+      }
+    end
   end
 end
