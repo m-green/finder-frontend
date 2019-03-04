@@ -83,11 +83,6 @@ private
   end
 
   def default_filters
-    # TODO: remove this. Just testing what happens if we have a default filter value
-    content['details']['filter'] = {
-      "appear_in_find_eu_exit_guidance_business_finder": "yes"
-    }
-
     content['details'].fetch('filter', {})
   end
 
