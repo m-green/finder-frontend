@@ -1,0 +1,30 @@
+{
+  "analytics_identifier": null,
+  "base_path": "/find-eu-exit-guidance-business/email-signup",
+  "content_id": "2818d67a-029a-4899-a438-a543d5c6a20d",
+  "document_type": "finder_email_signup",
+  "first_published_at": "2018-12-19T14:34:00.000+00:00",
+  "locale": "en",
+  "phase": "live",
+  "public_updated_at": "2019-02-21T16:33:52.000+00:00",
+  "publishing_app": "rummager",
+  "publishing_scheduled_at": null,
+  "rendering_app": "finder-frontend",
+  "scheduled_publishing_delay_seconds": null,
+  "schema_name": "email_alert_signup",
+  "title": "Find EU Exit guidance for your business",
+  "updated_at": "2019-02-21T16:33:53.275Z",
+  "withdrawn_notice": {},
+  "publishing_request_id": "25614-1550766832.764-10.3.3.1-388",
+  "links": {},
+  "description": null,
+  "tags": {
+    "appear_in_find_eu_exit_guidance_business_finder": [
+      "yes"
+    ]
+  },
+  "details": {
+    "beta": false,
+    "subscription_list_title_prefix": "Find EU Exit guidance for your business "
+  }
+}

@@ -4,7 +4,7 @@ class SignupPresenter
   attr_reader :content_item, :params
 
   def initialize(content_item, params)
-    @content_item = content_item
+    @content_item = JSON.parse(File.read("features/fixtures/business_readiness_signup.json"))
     @params = params
   end
 
