@@ -62,6 +62,10 @@ class SignupPresenter
     "#"
   end
 
+  def is_business_finder?
+    content_item["details"]["subscription_list_title_prefix"] == "Find EU Exit guidance for your business "
+  end
+
 private
 
   def facets_with_choicess

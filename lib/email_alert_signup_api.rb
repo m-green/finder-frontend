@@ -55,6 +55,7 @@ private
   end
 
   def tags
+    return {} if subscription_list_title_prefix == "Find EU Exit guidance for your business "
     @tags ||= massaged_attributes.each_with_object({}) { |(key, value), hash|
       if is_all_field?(key)
         hash[key[4..-1]] = { all: value }
