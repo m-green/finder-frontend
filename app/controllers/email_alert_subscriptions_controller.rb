@@ -20,6 +20,7 @@ class EmailAlertSubscriptionsController < ApplicationController
 private
 
   def content
+    @content = JSON.parse(File.read("features/fixtures/business_finder_email.json"))
     @content ||= fetch_content_item(request.path)
   end
 

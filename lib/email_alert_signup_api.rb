@@ -49,6 +49,10 @@ private
     massaged_attributes['content_purpose_supergroup'] || default_attributes[:filter]['content_purpose_supergroup']
   end
 
+  def appear_in_business_finder
+    massaged_attributes['appear_in_find_eu_exit_guidance_business_finder'] || default_attributes[:filter]['appear_in_find_eu_exit_guidance_business_finder']
+  end
+
   def tags
     @tags ||= massaged_attributes.each_with_object({}) { |(key, value), hash|
       if is_all_field?(key)
@@ -79,6 +83,7 @@ private
   def validater
     options = massaged_attributes
     options["content_purpose_supergroup"] = content_purpose_supergroup if content_purpose_supergroup.present?
+    options["appear_in_find_eu_exit_guidance_business_finder"] = appear_in_business_finder if appear_in_business_finder.present?
 
     @validater ||= ::ValidateQuery.new(options)
   end

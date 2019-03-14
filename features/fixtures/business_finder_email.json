@@ -1,0 +1,45 @@
+{
+  "analytics_identifier": null,
+  "base_path": "/find-eu-exit-guidance-business/email-signup",
+  "content_id": "2818d67a-029a-4899-a438-a543d5c6a20d",
+  "document_type": "finder_email_signup",
+  "first_published_at": "2018-12-19T14:34:00.000+00:00",
+  "locale": "en",
+  "phase": "live",
+  "public_updated_at": "2019-03-12T12:47:05.000+00:00",
+  "publishing_app": "rummager",
+  "publishing_scheduled_at": null,
+  "rendering_app": "finder-frontend",
+  "scheduled_publishing_delay_seconds": null,
+  "schema_name": "finder_email_signup",
+  "title": "Find EU Exit guidance for your business",
+  "updated_at": "2019-03-12T12:47:08.047Z",
+  "withdrawn_notice": {},
+  "publishing_request_id": "20663-1552394827.514-10.3.3.1-388",
+  "links": {
+    "available_translations": [
+      {
+        "title": "Find EU Exit guidance for your business",
+        "public_updated_at": "2019-03-12T12:47:05Z",
+        "document_type": "finder_email_signup",
+        "schema_name": "finder_email_signup",
+        "base_path": "/find-eu-exit-guidance-business/email-signup",
+        "api_path": "/api/content/find-eu-exit-guidance-business/email-signup",
+        "withdrawn": false,
+        "content_id": "2818d67a-029a-4899-a438-a543d5c6a20d",
+        "locale": "en",
+        "api_url": "https://www.gov.uk/api/content/find-eu-exit-guidance-business/email-signup",
+        "web_url": "https://www.gov.uk/find-eu-exit-guidance-business/email-signup",
+        "links": {}
+      }
+    ]
+  },
+  "description": null,
+  "details": {
+    "beta": false,
+    "filter": {
+      "appear_in_find_eu_exit_guidance_business_finder": "yes"
+    },
+    "subscription_list_title_prefix": "Find EU Exit guidance for your business"
+    }
+  }
