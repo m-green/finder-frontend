@@ -1,13 +1,14 @@
 <div class="filter-form" id="keywords">
   <%= render "govuk_publishing_components/components/input", {
     label: {
-      text: "Search"
+      text: "Search <span class=\"govuk-visually-hidden\">#{finder.name}</span>".html_safe
     },
     name: "keywords",
     value: @results.user_supplied_keywords,
     id: "finder-keyword-search",
     controls: "js-search-results-info"
   } if finder.show_keyword_search? %>
+
   <div class="govuk-form-group" data-module="track-click" data-track-category="filterClicked"
       data-track-action="skip-Link" data-track-label="">
     <%= render "govuk_publishing_components/components/skip_link", {
