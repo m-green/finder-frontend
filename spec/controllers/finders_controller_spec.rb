@@ -21,7 +21,7 @@ describe FindersController, type: :controller do
 
     let(:all_content_finder) do
       finder = govuk_content_schema_example('finder').to_hash.merge(
-        'base_path' => '/all-content',
+        'base_path' => '/search/all',
       )
 
       finder["details"]["default_documents_per_page"] = 10
