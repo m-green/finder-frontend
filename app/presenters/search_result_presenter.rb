@@ -25,6 +25,7 @@ class SearchResultPresenter
       promoted_summary: promoted_summary,
       show_metadata: show_metadata,
       es_score: es_score,
+      top_result: false
     }
   end
 

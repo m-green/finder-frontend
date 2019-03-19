@@ -335,6 +335,96 @@ RSpec.describe ResultSetPresenter do
     end
   end
 
+  describe "#top_results?" do
+    subject(:presenter_with_top_result) { ResultSetPresenter.new(finder, filter_params, view_context) }
+
+    let(:filter_params) { { keywords: 'test', order: '-relevance' } }
+    let(:results) do
+      ResultSet.new(
+        (1..total).map { document },
+        total,
+        )
+    end
+
+    let(:finder) do
+      double(
+        FinderPresenter,
+        slug: "/find-eu-exit-guidance-business",
+        name: 'A finder',
+        results: results,
+        document_noun: document_noun,
+        total: 20,
+        facets: a_facet_collection,
+        keywords: keywords,
+        default_documents_per_page: 10,
+        values: {},
+        pagination: pagination,
+        sort: {},
+        )
+    end
+
+    let(:document_with_higher_es_score) do
+      double(
+        Document,
+        title: 'Investigation into the distribution of road fuels in parts of Scotland',
+        description: "Some description",
+        path: 'slug-1',
+        metadata: [
+          { id: 'case-type', name: 'Case type', value: 'CA98 and civil cartels', type: 'text', labels: %W(ca98-and-civil-cartels) }
+        ],
+        summary: 'Higher score',
+        is_historic: false,
+        government_name: 'The Government!',
+        promoted: false,
+        promoted_summary: nil,
+        show_metadata: false,
+        es_score: 1000.0,
+        )
+    end
+
+    let(:document_with_lower_es_score) do
+      double(
+        Document,
+        title: 'Investigation into the distribution of road fuels in parts of Scotland',
+        path: 'slug-2',
+        metadata: [
+          { id: 'case-state', name: 'Case state', value: 'Open', type: 'text', labels: %W(open) },
+          { id: 'opened-date', name: 'Opened date', value: '2006-7-14', type: 'date' },
+          { id: 'case-type', name: 'Case type', value: 'CA98 and civil cartels', type: 'text', labels: %W(ca98-and-civil-cartels) },
+          { id: 'case-type', name: 'Case type', value: 'CA98 and civil cartels', type: 'text', labels: %W(ca98-and-civil-cartels) }
+        ],
+        summary: 'I am a document',
+        summary: 'Lower score',
+        is_historic: false,
+        government_name: 'The Government!',
+        promoted: false,
+        promoted_summary: nil,
+        show_metadata: false,
+        es_score: 0.1,
+        es_score: 900.0,
+        )
+    end
+
+    before(:each) do
+      allow(presenter_with_top_result).to receive(:sort_option).and_return({ "key" => "-relevance" })
+    end
+
+    context "has top result true" do
+      let(:results) do
+        ResultSet.new(
+          [document_with_higher_es_score, document_with_lower_es_score],
+          total
+        )
+      end
+
+      it 'creates a new document for each result' do
+        search_result_objects = presenter_with_top_result.documents
+        expect(search_result_objects[0][:document][:top_result]).to eql(true)
+        expect(search_result_objects[0][:document][:summary]).to eql("Some description")
+      end
+    end
+  end
+
   describe "#documents_by_facets" do
     let(:primary_facet) do
       double(

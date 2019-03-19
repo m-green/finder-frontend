@@ -1,7 +1,7 @@
 class Document
   attr_reader :title, :public_timestamp, :is_historic, :government_name,
               :content_purpose_supergroup, :document_type, :organisations,
-              :release_timestamp, :es_score
+              :release_timestamp, :es_score, :top_result, :description
 
   def initialize(rummager_document, finder)
     rummager_document = rummager_document.with_indifferent_access
@@ -16,6 +16,7 @@ class Document
     @is_historic = rummager_document.fetch(:is_historic, false)
     @government_name = rummager_document.fetch(:government_name, nil)
     @es_score = rummager_document.fetch(:es_score, nil)
+    @top_result = rummager_document.fetch(:top_result, false)
     @finder = finder
     @rummager_document = rummager_document.slice(*metadata_keys)
   end
@@ -48,7 +49,7 @@ class Document
 
 private
 
-  attr_reader :link, :rummager_document, :finder, :description
+  attr_reader :link, :rummager_document, :finder
 
   def is_mainstream_content?
     %w(completed_transaction
