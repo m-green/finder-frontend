@@ -23,10 +23,26 @@
 
 <header>
   <div class="title-and-metadata">
-    <%= render partial: 'govuk_publishing_components/components/title', locals: {
-      context: finder.human_readable_finder_format,
-      title: finder.name
-    } %>
+    <% if finder.name != 'All content' %>
+      <%= render partial: 'govuk_publishing_components/components/title', locals: {
+        context: finder.human_readable_finder_format,
+        title: finder.name
+      } %>
+    <% else %>
+      <form method="get" action="<%= finder.slug %>" class="js-live-search-form">
+        <% label_text = capture do %>
+          <h1 class="app-c-search-page-heading">Search<span class="govuk-visually-hidden"> all content</span></h1>
+        <% end %>
+        <%= render "govuk_publishing_components/components/search", {
+            inline_label: false,
+            label_text: label_text,
+            name: "keywords",
+            hide_search_button: true,
+            value: @results.user_supplied_keywords,
+            id: "finder-keyword-search",
+            controls: "js-search-results-info"
+        } %>
+    <% end %>
     <% if finder.page_metadata.any? %>
       <%= render 'govuk_publishing_components/components/metadata', page_metadata(finder.page_metadata) %>
     <% end %>
@@ -56,7 +72,9 @@
 </header>
 
 <div class="grid-row">
-  <form method="get" action="<%= finder.slug %>" class="js-live-search-form">
+  <% if finder.name != 'All content' %>
+    <form method="get" action="<%= finder.slug %>" class="js-live-search-form">
+  <% end %>
     <input type="hidden" name="parent" value="<%= @parent %>">
     <div class="column-third" role="search" aria-label="<%= finder.name %>">
       <%= render finder.facets %>
