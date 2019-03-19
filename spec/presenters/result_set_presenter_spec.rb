@@ -393,20 +393,18 @@ RSpec.describe ResultSetPresenter do
           { id: 'case-type', name: 'Case type', value: 'CA98 and civil cartels', type: 'text', labels: %W(ca98-and-civil-cartels) },
           { id: 'case-type', name: 'Case type', value: 'CA98 and civil cartels', type: 'text', labels: %W(ca98-and-civil-cartels) }
         ],
-        summary: 'I am a document',
         summary: 'Lower score',
         is_historic: false,
         government_name: 'The Government!',
         promoted: false,
         promoted_summary: nil,
         show_metadata: false,
-        es_score: 0.1,
         es_score: 900.0,
         )
     end
 
     before(:each) do
-      allow(presenter_with_top_result).to receive(:sort_option).and_return({ "key" => "-relevance" })
+      allow(presenter_with_top_result).to receive(:sort_option).and_return("key" => "-relevance")
     end
 
     context "has top result true" do

@@ -98,7 +98,7 @@ private
   end
 
   def with_top_result(documents)
-    if (documents[0][:document][:es_score].present? && documents[1][:document][:es_score].present?)
+    if documents[0][:document][:es_score].present? && documents[1][:document][:es_score].present?
       documents[0][:document][:top_result] = is_top_result?(documents[0][:document][:es_score], documents[1][:document][:es_score])
       documents[0][:document][:summary] = results[0].description if documents[0][:document][:top_result]
     end
