@@ -21,93 +21,95 @@
   <%= render 'govuk_publishing_components/components/government_navigation', active: finder.government_content_section %>
 <% end %>
 
-<header>
-  <div class="title-and-metadata">
-    <% if finder.name != 'All content' %>
-      <%= render partial: 'govuk_publishing_components/components/title', locals: {
-        context: finder.human_readable_finder_format,
-        title: finder.name
-      } %>
-    <% else %>
-      <form method="get" action="<%= finder.slug %>" class="js-live-search-form">
-        <% label_text = capture do %>
-          <h1 class="app-c-search-page-heading">Search<span class="govuk-visually-hidden"> all content</span></h1>
-        <% end %>
-        <%= render "govuk_publishing_components/components/search", {
-            inline_label: false,
-            label_text: label_text,
-            name: "keywords",
-            hide_search_button: true,
-            value: @results.user_supplied_keywords,
-            id: "finder-keyword-search",
-            controls: "js-search-results-info"
-        } %>
-    <% end %>
-    <% if finder.page_metadata.any? %>
-      <%= render 'govuk_publishing_components/components/metadata', page_metadata(finder.page_metadata) %>
-    <% end %>
+<form method="get" action="<%= finder.slug %>" class="js-live-search-form">
+  <input type="hidden" name="parent" value="<%= @parent %>">
 
-    <% if finder.summary %>
-      <div class="summary">
-        <%= render 'govuk_publishing_components/components/govspeak', content: finder.summary.html_safe %>
+  <header>
+    <div class="title-and-metadata">
+      <% if finder.name != 'All content' %>
+        <%= render partial: 'govuk_publishing_components/components/title', locals: {
+          context: finder.human_readable_finder_format,
+          title: finder.name
+        } %>
+      <% else %>
+
+          <% label_text = capture do %>
+            <h1 class="app-c-search-page-heading">Search<span class="govuk-visually-hidden"> all content</span></h1>
+          <% end %>
+          <%= render "govuk_publishing_components/components/search", {
+              inline_label: false,
+              label_text: label_text,
+              name: "keywords",
+              hide_search_button: true,
+              value: @results.user_supplied_keywords,
+              id: "finder-keyword-search",
+              controls: "js-search-results-info"
+          } %>
+      <% end %>
+      <% if finder.page_metadata.any? %>
+        <%= render 'govuk_publishing_components/components/metadata', page_metadata(finder.page_metadata) %>
+      <% end %>
+
+      <% if finder.summary %>
+        <div class="summary">
+          <%= render 'govuk_publishing_components/components/govspeak', content: finder.summary.html_safe %>
+        </div>
+      <% end %>
+    </div>
+
+    <% if finder.logo_path %>
+      <div class="logo">
+        <%= image_tag finder.logo_path, id: "logo-image" %>
       </div>
     <% end %>
-  </div>
 
-  <% if finder.logo_path %>
-    <div class="logo">
-      <%= image_tag finder.logo_path, id: "logo-image" %>
-    </div>
-  <% end %>
-
-  <% if finder.related.any? %>
-    <div class='related-links'>
-      <ul class="finder-results">
-        <% finder.related.each do |link| %>
-          <li><%= link_to link['title'], link['web_url'] %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-</header>
-
-<div class="grid-row">
-  <% if finder.name != 'All content' %>
-    <form method="get" action="<%= finder.slug %>" class="js-live-search-form">
-  <% end %>
-    <input type="hidden" name="parent" value="<%= @parent %>">
-    <div class="column-third" role="search" aria-label="<%= finder.name %>">
-      <%= render finder.facets %>
-    </div>
-
-    <div class="column-two-thirds" role="region" aria-label="<%= finder.name %> search results">
-      <div class='js-live-search-results-block'>
-        <div class="filtered-results">
-          <div aria-live='assertive' id='js-search-results-info' data-module="remove-filter">
-            <%= render_mustache('result_count', @results.to_hash) %>
-          </div>
-
-          <div class="govuk-caption-l live-search-loading-message" id="js-loading-message"></div>
-          <% if @results.has_email_signup_link? %>
-            <%= render "govuk_publishing_components/components/subscription-links", @results.signup_links %>
+    <% if finder.related.any? %>
+      <div class='related-links'>
+        <ul class="finder-results">
+          <% finder.related.each do |link| %>
+            <li><%= link_to link['title'], link['web_url'] %></li>
           <% end %>
-          <% if finder.sort %>
-            <div class="govuk-form-group">
-              <%= label_tag 'order', 'Sort by', class: 'govuk-label' %>
-              <%= select_tag 'order', finder.sort_options,
-                class: 'govuk-select js-order-results',
-                'aria-controls': 'js-search-results-info',
-                data: { 'default-sort-option' => finder.default_sort_option_value,
-                        'relevance-sort-option' => finder.relevance_sort_option_value,
-                        'module' => 'track-select-change'} %>
+        </ul>
+      </div>
+    <% end %>
+  </header>
+
+  <div class="grid-row">
+    <% if finder.name != 'All content' %>
+
+    <% end %>
+      <div class="column-third" role="search" aria-label="<%= finder.name %>">
+        <%= render finder.facets %>
+      </div>
+
+      <div class="column-two-thirds" role="region" aria-label="<%= finder.name %> search results">
+        <div class='js-live-search-results-block'>
+          <div class="filtered-results">
+            <div aria-live='assertive' id='js-search-results-info' data-module="remove-filter">
+              <%= render_mustache('result_count', @results.to_hash) %>
             </div>
-          <% end %>
 
-          <div id='js-results'>
-            <%= render_mustache('results', @results.to_hash) %>
+            <div class="govuk-caption-l live-search-loading-message" id="js-loading-message"></div>
+            <% if @results.has_email_signup_link? %>
+              <%= render "govuk_publishing_components/components/subscription-links", @results.signup_links %>
+            <% end %>
+            <% if finder.sort %>
+              <div class="govuk-form-group">
+                <%= label_tag 'order', 'Sort by', class: 'govuk-label' %>
+                <%= select_tag 'order', finder.sort_options,
+                  class: 'govuk-select js-order-results',
+                  'aria-controls': 'js-search-results-info',
+                  data: { 'default-sort-option' => finder.default_sort_option_value,
+                          'relevance-sort-option' => finder.relevance_sort_option_value,
+                          'module' => 'track-select-change'} %>
+              </div>
+            <% end %>
+
+            <div id='js-results'>
+              <%= render_mustache('results', @results.to_hash) %>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </form>
-</div>
+  </div>
+</form>
