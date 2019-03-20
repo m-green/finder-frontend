@@ -58,7 +58,7 @@
             "other-eu"
           ],
           "index": "detailed",
-          "es_score": null,
+          "es_score": 10000.0,
           "_id": "/guidance/passport-rules-for-travel-to-europe-after-brexit",
           "elasticsearch_type": "edition",
           "document_type": "edition"
@@ -118,7 +118,7 @@
             "products-or-goods"
           ],
           "index": "detailed",
-          "es_score": null,
+          "es_score": 900.0,
           "_id": "/guidance/regulations-and-standards-after-brexit",
           "elasticsearch_type": "edition",
           "document_type": "edition"
@@ -146,7 +146,7 @@
             "products-or-goods"
           ],
           "index": "government",
-          "es_score": null,
+          "es_score": 800.0,
           "_id": "/government/publications/industrial-emissions-standards-best-available-techniques-if-theres-no-brexit-deal",
           "elasticsearch_type": "edition",
           "document_type": "edition"
